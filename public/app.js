@@ -1,5 +1,18 @@
-// Page navigation
+// ============================================
+// KODBANK - PREMIUM BANKING APPLICATION
+// ============================================
+
+// Page Navigation
+function showLanding() {
+  document.getElementById('landing-page').classList.remove('hidden');
+  document.getElementById('register-page').classList.add('hidden');
+  document.getElementById('login-page').classList.add('hidden');
+  document.getElementById('dashboard-page').classList.add('hidden');
+  clearMessages();
+}
+
 function showRegister() {
+  document.getElementById('landing-page').classList.add('hidden');
   document.getElementById('register-page').classList.remove('hidden');
   document.getElementById('login-page').classList.add('hidden');
   document.getElementById('dashboard-page').classList.add('hidden');
@@ -7,6 +20,7 @@ function showRegister() {
 }
 
 function showLogin() {
+  document.getElementById('landing-page').classList.add('hidden');
   document.getElementById('register-page').classList.add('hidden');
   document.getElementById('login-page').classList.remove('hidden');
   document.getElementById('dashboard-page').classList.add('hidden');
@@ -14,6 +28,7 @@ function showLogin() {
 }
 
 function showDashboard() {
+  document.getElementById('landing-page').classList.add('hidden');
   document.getElementById('register-page').classList.add('hidden');
   document.getElementById('login-page').classList.add('hidden');
   document.getElementById('dashboard-page').classList.remove('hidden');
@@ -21,13 +36,14 @@ function showDashboard() {
 }
 
 function clearMessages() {
-  document.getElementById('register-message').textContent = '';
-  document.getElementById('register-message').className = 'message';
-  document.getElementById('login-message').textContent = '';
-  document.getElementById('login-message').className = 'message';
+  const messages = document.querySelectorAll('.message');
+  messages.forEach(msg => {
+    msg.textContent = '';
+    msg.className = 'message hidden';
+  });
 }
 
-// Register form handler
+// Registration Handler
 document.getElementById('register-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   
@@ -37,8 +53,9 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
   const password = document.getElementById('reg-password').value;
 
   const messageEl = document.getElementById('register-message');
-  messageEl.textContent = 'Registering...';
+  messageEl.textContent = 'Creating your account...';
   messageEl.className = 'message';
+  messageEl.classList.remove('hidden');
 
   try {
     console.log('Attempting registration for:', username);
@@ -53,24 +70,24 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
     console.log('Response data:', data);
 
     if (response.ok) {
-      messageEl.textContent = data.message + ' - Redirecting to login...';
+      messageEl.textContent = '✓ ' + data.message + ' - Redirecting to login...';
       messageEl.className = 'message success';
       setTimeout(() => {
         showLogin();
         document.getElementById('register-form').reset();
       }, 2000);
     } else {
-      messageEl.textContent = data.message || 'Registration failed';
+      messageEl.textContent = '✗ ' + (data.message || 'Registration failed');
       messageEl.className = 'message error';
     }
   } catch (error) {
     console.error('Registration error:', error);
-    messageEl.textContent = 'Network error: ' + error.message;
+    messageEl.textContent = '✗ Network error: ' + error.message;
     messageEl.className = 'message error';
   }
 });
 
-// Login form handler
+// Login Handler
 document.getElementById('login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   
@@ -78,8 +95,9 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   const password = document.getElementById('login-password').value;
 
   const messageEl = document.getElementById('login-message');
-  messageEl.textContent = 'Logging in...';
+  messageEl.textContent = 'Signing you in...';
   messageEl.className = 'message';
+  messageEl.classList.remove('hidden');
 
   try {
     console.log('Attempting login for:', username);
@@ -95,28 +113,35 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     console.log('Response data:', data);
 
     if (response.ok && data.success) {
-      messageEl.textContent = 'Login successful! Redirecting...';
+      messageEl.textContent = '✓ Login successful! Redirecting...';
       messageEl.className = 'message success';
+      
+      // Update dashboard with username
+      document.getElementById('dashboard-username').textContent = username;
+      document.getElementById('sidebar-username').textContent = username;
+      document.querySelector('.user-avatar').textContent = username.charAt(0).toUpperCase();
+      
       setTimeout(() => {
         showDashboard();
         document.getElementById('login-form').reset();
       }, 1000);
     } else {
-      messageEl.textContent = data.message || 'Login failed';
+      messageEl.textContent = '✗ ' + (data.message || 'Login failed');
       messageEl.className = 'message error';
     }
   } catch (error) {
     console.error('Login error:', error);
-    messageEl.textContent = 'Network error: ' + error.message;
+    messageEl.textContent = '✗ Network error: ' + error.message;
     messageEl.className = 'message error';
   }
 });
 
-// Check balance button handler
+// Check Balance Handler
 document.getElementById('check-balance-btn').addEventListener('click', async () => {
   const button = document.getElementById('check-balance-btn');
+  const originalText = button.innerHTML;
   button.disabled = true;
-  button.textContent = 'Loading...';
+  button.innerHTML = '<svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg> Loading...';
 
   try {
     const response = await fetch('/api/user/balance', {
@@ -139,6 +164,9 @@ document.getElementById('check-balance-btn').addEventListener('click', async () 
       balanceText.textContent = `Your balance is: $${formattedBalance}`;
       balanceDisplay.classList.remove('hidden');
       
+      // Update main balance display
+      document.getElementById('balance-amount').textContent = `$${formattedBalance}`;
+      
       // Trigger confetti animation
       launchConfetti();
     } else {
@@ -149,14 +177,17 @@ document.getElementById('check-balance-btn').addEventListener('click', async () 
     }
   } catch (error) {
     alert('Error fetching balance. Please try again.');
+    console.error('Balance error:', error);
   } finally {
     button.disabled = false;
-    button.innerHTML = '<span class="btn-icon">💵</span> Check Balance';
+    button.innerHTML = originalText;
   }
 });
 
-// Logout button handler
-document.getElementById('logout-btn').addEventListener('click', async () => {
+// Logout Handler
+document.getElementById('logout-btn').addEventListener('click', async (e) => {
+  e.preventDefault();
+  
   try {
     await fetch('/api/auth/logout', {
       method: 'POST',
@@ -164,13 +195,14 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
     });
     
     document.getElementById('balance-display').classList.add('hidden');
-    showLogin();
+    showLanding();
   } catch (error) {
+    console.error('Logout error:', error);
     alert('Error logging out');
   }
 });
 
-// Confetti animation
+// Confetti Animation
 function launchConfetti() {
   const canvas = document.getElementById('confetti-canvas');
   const ctx = canvas.getContext('2d');
@@ -179,7 +211,7 @@ function launchConfetti() {
   canvas.height = window.innerHeight;
   
   const confettiPieces = [];
-  const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#a29bfe', '#fd79a8', '#fdcb6e'];
+  const colors = ['#F5A623', '#06B6D4', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899'];
   
   class Confetti {
     constructor() {
@@ -239,5 +271,5 @@ function launchConfetti() {
   animate();
 }
 
-// Initialize app
-showRegister();
+// Initialize app - Show landing page
+showLanding();

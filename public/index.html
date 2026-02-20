@@ -3,72 +3,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kodbank - Your Trusted Banking Partner</title>
+  <title>KodBank - Secure Digital Banking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app">
-    <!-- Register Page -->
-    <div id="register-page" class="page">
-      <div class="container">
-        <h1>🏦 Kodbank Registration</h1>
-        <form id="register-form">
-          <input type="text" id="reg-username" placeholder="Username (3-50 characters)" required minlength="3" maxlength="50" pattern="[a-zA-Z0-9_]+">
-          <input type="email" id="reg-email" placeholder="Email (e.g., user@example.com)" required>
-          <input type="tel" id="reg-phone" placeholder="Phone (10 digits, optional)" pattern="[0-9]{10}">
-          <input type="password" id="reg-password" placeholder="Password (min 8 characters)" required minlength="8">
-          <button type="submit">Register</button>
-        </form>
-        <p class="link">Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
-        <div id="register-message" class="message"></div>
+  
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="#" class="logo" onclick="showLanding()">
+        <div class="logo-icon">K</div>
+        <span>KodBank</span>
+      </a>
+      <div class="nav-links">
+        <a href="#" class="nav-link" onclick="showLogin()">Login</a>
+        <a href="#" class="btn btn-accent" onclick="showRegister()">Get Started</a>
       </div>
     </div>
+  </nav>
 
-    <!-- Login Page -->
-    <div id="login-page" class="page hidden">
-      <div class="container">
-        <h1>🏦 Kodbank Login</h1>
-        <form id="login-form">
-          <input type="text" id="login-username" placeholder="Username" required>
-          <input type="password" id="login-password" placeholder="Password" required>
-          <button type="submit">Login</button>
-        </form>
-        <p class="link">Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
-        <div id="login-message" class="message"></div>
-      </div>
-    </div>
-
-    <!-- Dashboard Page -->
-    <div id="dashboard-page" class="page hidden">
-      <div class="dashboard-container">
-        <div class="dashboard-header">
-          <h1>💰 Kodbank Dashboard</h1>
-          <button id="logout-btn" class="logout-btn">Logout</button>
-        </div>
+  <!-- Landing Page -->
+  <div id="landing-page" class="page">
+    <div class="container-lg">
+      <div class="hero-section fade-in">
+        <h1 class="hero-title">Banking Made Simple,<br>Secure & Smart</h1>
+        <p class="hero-subtitle">Experience the future of digital banking with KodBank</p>
         
-        <div class="dashboard-content">
-          <div class="welcome-card">
-            <h2>Welcome back!</h2>
-            <p>Manage your account and check your balance</p>
+        <div class="trust-badges">
+          <div class="trust-badge">
+            <svg class="trust-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Bank-Grade Security</span>
+          </div>
+          <div class="trust-badge">
+            <svg class="trust-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+            </svg>
+            <span>Instant Transactions</span>
+          </div>
+          <div class="trust-badge">
+            <svg class="trust-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>24/7 Support</span>
+          </div>
+        </div>
+
+        <div class="cta-buttons">
+          <button class="btn btn-primary btn-lg" onclick="showRegister()">Open Account</button>
+          <button class="btn btn-secondary btn-lg" onclick="showLogin()">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Registration Page -->
+  <div id="register-page" class="page hidden">
+    <div class="container">
+      <div class="glass-card glass-card-lg fade-in">
+        <div class="form-header">
+          <h1 class="form-title">Create Your Account</h1>
+          <p class="form-subtitle">Join thousands of satisfied customers</p>
+        </div>
+
+        <form id="register-form" class="form">
+          <div class="form-group">
+            <label class="form-label" for="reg-username">Username</label>
+            <input 
+              type="text" 
+              id="reg-username" 
+              class="form-input" 
+              placeholder="Choose a username"
+              required 
+              minlength="3" 
+              maxlength="50" 
+              pattern="[a-zA-Z0-9_]+"
+            >
           </div>
 
-          <div class="action-card">
-            <button id="check-balance-btn" class="balance-btn">
-              <span class="btn-icon">💵</span>
-              Check Balance
-            </button>
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address</label>
+            <input 
+              type="email" 
+              id="reg-email" 
+              class="form-input" 
+              placeholder="your.email@example.com"
+              required
+            >
           </div>
 
-          <div id="balance-display" class="balance-display hidden">
-            <div class="balance-content">
-              <h2 id="balance-text"></h2>
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">Phone Number</label>
+            <input 
+              type="tel" 
+              id="reg-phone" 
+              class="form-input" 
+              placeholder="10-digit phone number"
+              pattern="[0-9]{10}"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password</label>
+            <input 
+              type="password" 
+              id="reg-password" 
+              class="form-input" 
+              placeholder="Minimum 8 characters"
+              required 
+              minlength="8"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-lg">Create Account</button>
+        </form>
+
+        <p class="link">Already have an account? <a href="#" onclick="showLogin()">Sign in here</a></p>
+        <div id="register-message" class="message hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Page -->
+  <div id="login-page" class="page hidden">
+    <div class="container">
+      <div class="glass-card glass-card-lg fade-in">
+        <div class="form-header">
+          <h1 class="form-title">Welcome Back</h1>
+          <p class="form-subtitle">Sign in to access your account</p>
+        </div>
+
+        <form id="login-form" class="form">
+          <div class="form-group">
+            <label class="form-label" for="login-username">Username</label>
+            <input 
+              type="text" 
+              id="login-username" 
+              class="form-input" 
+              placeholder="Enter your username"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input 
+              type="password" 
+              id="login-password" 
+              class="form-input" 
+              placeholder="Enter your password"
+              required
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-lg">Sign In</button>
+        </form>
+
+        <p class="link">Don't have an account? <a href="#" onclick="showRegister()">Create one now</a></p>
+        <div id="login-message" class="message hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div id="dashboard-page" class="page hidden">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="user-info">
+            <div class="user-avatar">U</div>
+            <div class="user-details">
+              <h3 id="sidebar-username">User</h3>
+              <p>Customer</p>
             </div>
           </div>
         </div>
-      </div>
-      <canvas id="confetti-canvas"></canvas>
+
+        <nav class="sidebar-nav">
+          <a href="#" class="sidebar-link active">
+            <svg class="sidebar-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="#" class="sidebar-link">
+            <svg class="sidebar-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+              <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+            </svg>
+            <span>Transactions</span>
+          </a>
+          <a href="#" class="sidebar-link">
+            <svg class="sidebar-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+            </svg>
+            <span>Send Money</span>
+          </a>
+          <a href="#" class="sidebar-link" id="logout-btn">
+            <svg class="sidebar-icon" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+            </svg>
+            <span>Logout</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="dashboard-main">
+        <section class="welcome-section">
+          <h1>Welcome back, <span id="dashboard-username">User</span>!</h1>
+          <p>Here's what's happening with your account today.</p>
+        </section>
+
+        <!-- Balance Card -->
+        <div class="balance-card glass-card">
+          <p class="balance-label">Available Balance</p>
+          <h2 class="balance-amount" id="balance-amount">$100,000.00</h2>
+          <div class="balance-actions">
+            <button class="btn btn-accent" id="check-balance-btn">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+              </svg>
+              Check Balance
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Activity</h3>
+              <svg class="card-icon" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <p style="color: var(--text-secondary);">No recent transactions</p>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">Quick Actions</h3>
+              <svg class="card-icon" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+              <button class="btn btn-secondary btn-full">Send Money</button>
+              <button class="btn btn-secondary btn-full">View Statements</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Balance Display (Hidden by default) -->
+        <div id="balance-display" class="dashboard-card hidden" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white; text-align: center; padding: 2rem;">
+          <h2 id="balance-text" style="font-size: 2rem; font-weight: 800;"></h2>
+        </div>
+      </main>
     </div>
   </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
 
   <script src="app.js"></script>
 </body>
