@@ -41,13 +41,16 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
   messageEl.className = 'message';
 
   try {
+    console.log('Attempting registration for:', username);
     const response = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email, phone, password })
     });
 
+    console.log('Response status:', response.status);
     const data = await response.json();
+    console.log('Response data:', data);
 
     if (response.ok) {
       messageEl.textContent = data.message + ' - Redirecting to login...';
@@ -57,11 +60,12 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
         document.getElementById('register-form').reset();
       }, 2000);
     } else {
-      messageEl.textContent = data.message;
+      messageEl.textContent = data.message || 'Registration failed';
       messageEl.className = 'message error';
     }
   } catch (error) {
-    messageEl.textContent = 'Network error. Please try again.';
+    console.error('Registration error:', error);
+    messageEl.textContent = 'Network error: ' + error.message;
     messageEl.className = 'message error';
   }
 });
@@ -78,6 +82,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   messageEl.className = 'message';
 
   try {
+    console.log('Attempting login for:', username);
     const response = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -85,7 +90,9 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
       body: JSON.stringify({ username, password })
     });
 
+    console.log('Response status:', response.status);
     const data = await response.json();
+    console.log('Response data:', data);
 
     if (response.ok && data.success) {
       messageEl.textContent = 'Login successful! Redirecting...';
@@ -95,11 +102,12 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         document.getElementById('login-form').reset();
       }, 1000);
     } else {
-      messageEl.textContent = data.message;
+      messageEl.textContent = data.message || 'Login failed';
       messageEl.className = 'message error';
     }
   } catch (error) {
-    messageEl.textContent = 'Network error. Please try again.';
+    console.error('Login error:', error);
+    messageEl.textContent = 'Network error: ' + error.message;
     messageEl.className = 'message error';
   }
 });
